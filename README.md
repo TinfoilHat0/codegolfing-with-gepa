@@ -1,4 +1,4 @@
-# Code Golf Agent — GEPA × code.golf
+# GEPA × code.golf
 
 An experiment applying [GEPA](https://gepa-ai.github.io/gepa/) (`optimize_anything`) to automatically compress Python solutions on [code.golf](https://code.golf).
 
@@ -46,9 +46,6 @@ All runs: **budget = 100 GEPA rollouts**, model used as both seed generator and 
 - **fibonacci**: Both Opus 4.5 and Sonnet 4.6 reached **38B — just 2 bytes from the world record**
 - **prime-numbers**: Opus 4.6 reached **44B (0.909)**, 4 bytes from the record
 - **evil-numbers**: Sonnet 4.6 reached **45B (0.889)** — found the `bit_count()` trick
-- **binary-lambda-calculus**: Sonnet solved it (745B) while Opus 4.6 couldn't even generate a correct seed — model capability differences matter on hard problems
-- **Sonnet 4.6 vs Opus**: Sonnet is ~5× cheaper and competitive overall — better choice for scale
-
 ---
 
 ## Before & After Examples
