@@ -1,0 +1,15 @@
+{
+  "correct_holes": [
+    "evil-numbers",
+    "fractions",
+    "arabic-to-roman",
+    "n-queens",
+    "card-number-validation",
+    "repeating-decimals",
+    "binary-lambda-calculus",
+    "fibonacci",
+    "prime-numbers",
+    "pernicious-numbers"
+  ],
+  "by_category": {}
+}

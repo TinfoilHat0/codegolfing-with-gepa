@@ -1,0 +1,437 @@
+[
+  {
+    "hole": "card-number-validation",
+    "category": "Computing",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 496,
+    "final_correct": true,
+    "final_bytes": 171,
+    "seed_score": 0.1673,
+    "final_score": 0.4854,
+    "human_best": 83,
+    "seed_code": "def luhn_check(card):\n    digits = card.replace(\" \", \"\")\n    total = 0\n    for i, d in enumerate(digits):\n        n = int(d)\n        if i % 2 == 0:  # X positions (0-indexed even positions)\n            doubled = n * 2\n            if doubled > 9:\n                doubled -= 9\n            total += doubled\n        else:  # y positions\n            total += n\n    return total % 10 == 0\n\nimport sys\n\nfor line in sys.stdin:\n    line = line.strip()\n    if line and luhn_check(line):\n        print(line)",
+    "final_code": "import sys\nfor l in sys.stdin:\n l=l.strip()\n if l:\n  d=[int(c)for c in l if c>' '][::-1]\n  t=sum(n if i%2==0 else n*2-9*(n>4)for i,n in enumerate(d))\n  if t%10==0:print(l)",
+    "delta_bytes": 325,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "def luhn_check(card):\n    digits = card.replace(\" \", \"\")\n    total = 0\n    for i, d in enumerate(digits):\n        n = int(d)\n        if i % 2 == 0:  # X positions (0-indexed even positions)\n            doubled = n * 2\n            if doubled > 9:\n                doubled -= 9\n            total += doubled\n        else:  # y positions\n            total += n\n    return total % 10 == 0\n\nimport sys\n\nfor line in sys.stdin:\n    line = line.strip()\n    if line and luhn_check(line):\n        print(line)",
+        "bytes": 496,
+        "score": 0.1673,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "import sys\nfor l in sys.stdin:\n l=l.strip()\n if l:\n  d=[int(c)for c in l if c!=' ']\n  s=sum(d[i]if(len(d)-i)%2else(d[i]*2-9if d[i]>4 else d[i]*2)for i in range(len(d)))\n  if s%10==0:print(l)",
+        "bytes": 190,
+        "score": 0.4368,
+        "is_best": false
+      },
+      {
+        "idx": 2,
+        "code": "import sys\nfor l in sys.stdin:\n l=l.strip()\n if l:\n  d=[int(c)for c in l if c>' ']\n  t=0\n  for i,n in enumerate(d):\n   if i%2==0:n=n*2-9*(n>4)\n   t+=n\n  if t%10==0:print(l)",
+        "bytes": 172,
+        "score": 0.4826,
+        "is_best": false
+      },
+      {
+        "idx": 3,
+        "code": "import sys\nfor l in sys.stdin:\n l=l.strip()\n if l:\n  d=[int(c)for c in l if c>' '][::-1]\n  t=sum(n if i%2==0 else n*2-9*(n>4)for i,n in enumerate(d))\n  if t%10==0:print(l)",
+        "bytes": 171,
+        "score": 0.4854,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "n-queens",
+    "category": "Gaming",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 745,
+    "final_correct": true,
+    "final_bytes": 231,
+    "seed_score": 0.1383,
+    "final_score": 0.4459,
+    "human_best": 103,
+    "seed_code": "def solve_nqueens(n):\n    solutions = []\n    \n    def is_safe(placement, row):\n        col = len(placement)\n        for c, r in enumerate(placement):\n            if r == row or abs(r - row) == abs(c - col):\n                return False\n        return True\n    \n    def backtrack(placement):\n        col = len(placement)\n        if col == n:\n            solutions.append(''.join(str(r + 1) for r in placement))\n            return\n        for row in range(n):\n            if is_safe(placement, row):\n                placement.append(row)\n                backtrack(placement)\n                placement.pop()\n    \n    backtrack([])\n    return solutions\n\nfor n in range(4, 9):\n    solutions = solve_nqueens(n)\n    for s in solutions:\n        print(s)",
+    "final_code": "def q(n,p=[]):\n if len(p)==n:yield''.join(map(str,p));return\n c=len(p)\n for r in range(1,n+1):\n  if all(r!=p[i]and abs(p[i]-r)!=c-i for i in range(c)):p+=[r];yield from q(n,p);p.pop()\nfor n in range(4,9):\n for s in q(n,[]):print(s)",
+    "delta_bytes": 514,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "def solve_nqueens(n):\n    solutions = []\n    \n    def is_safe(placement, row):\n        col = len(placement)\n        for c, r in enumerate(placement):\n            if r == row or abs(r - row) == abs(c - col):\n                return False\n        return True\n    \n    def backtrack(placement):\n        col = len(placement)\n        if col == n:\n            solutions.append(''.join(str(r + 1) for r in placement))\n            return\n        for row in range(n):\n            if is_safe(placement, row):\n                placement.append(row)\n                backtrack(placement)\n                placement.pop()\n    \n    backtrack([])\n    return solutions\n\nfor n in range(4, 9):\n    solutions = solve_nqueens(n)\n    for s in solutions:\n        print(s)",
+        "bytes": 745,
+        "score": 0.1383,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "def q(n,p=[]):\n if len(p)==n:yield''.join(map(str,p));return\n c=len(p)\n for r in range(1,n+1):\n  if all(r!=p[i]and abs(p[i]-r)!=c-i for i in range(c)):p+=[r];yield from q(n,p);p.pop()\nfor n in range(4,9):\n for s in q(n,[]):print(s)",
+        "bytes": 231,
+        "score": 0.4459,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "repeating-decimals",
+    "category": "Mathematics",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 1695,
+    "final_correct": true,
+    "final_bytes": 468,
+    "seed_score": 0.0649,
+    "final_score": 0.235,
+    "human_best": 110,
+    "seed_code": "import sys\nfrom math import gcd\n\ndef decimal_expansion(a, b):\n    # Handle negative numbers\n    negative = (a < 0) ^ (b < 0)\n    a, b = abs(a), abs(b)\n    \n    # Simplify fraction\n    common = gcd(a, b)\n    a //= common\n    b //= common\n    \n    # Integer part\n    integer_part = a // b\n    remainder = a % b\n    \n    result = \"\"\n    if negative and (integer_part > 0 or remainder > 0):\n        result = \"-\"\n    \n    result += str(integer_part)\n    \n    if remainder == 0:\n        return result\n    \n    result += \".\"\n    \n    # Decimal part\n    decimal_digits = []\n    remainders = {}\n    \n    while remainder != 0:\n        if remainder in remainders:\n            # Found repeating part\n            repeat_start = remainders[remainder]\n            non_repeating = decimal_digits[:repeat_start]\n            repeating = decimal_digits[repeat_start:]\n            result += \"\".join(map(str, non_repeating))\n            result += \"(\" + \"\".join(map(str, repeating)) + \")\"\n            return result\n        \n        remainders[remainder] = len(decimal_digits)\n        remainder *= 10\n        decimal_digits.append(remainder // b)\n        remainder = remainder % b\n    \n    result += \"\".join(map(str, decimal_digits))\n    return result\n\ndef main():\n    for line in sys.stdin:\n        line = line.strip()\n        if not line:\n            continue\n        \n        # Parse the fraction\n        if '/' in line:\n            parts = line.split('/')\n            a = int(parts[0].strip())\n            b = int(parts[1].strip())\n        else:\n            # Just an integer\n            a = int(line.strip())\n            b = 1\n        \n        print(decimal_expansion(a, b))\n\nif __name__ == \"__main__\":\n    main()",
+    "final_code": "import sys\nfrom math import gcd\nfor l in sys.stdin:\n l=l.strip()\n if not l:continue\n a,b=int(l.split('/')[0]),int(l.split('/')[1]) if '/'in l else(int(l),1)\n n=(a<0)^(b<0);a,b=abs(a),abs(b);g=gcd(a,b);a//=g;b//=g;i=a//b;r=a%b\n s=('-'if n and(i or r)else'')+str(i)\n if r:\n  s+='.';d=[];m={}\n  while r:\n   if r in m:s+=''.join(map(str,d[:m[r]]))+'('+''.join(map(str,d[m[r]:]));s+=')';break\n   m[r]=len(d);r*=10;d.append(r//b);r%=b\n  else:s+=''.join(map(str,d))\n print(s)",
+    "delta_bytes": 1227,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "import sys\nfrom math import gcd\n\ndef decimal_expansion(a, b):\n    # Handle negative numbers\n    negative = (a < 0) ^ (b < 0)\n    a, b = abs(a), abs(b)\n    \n    # Simplify fraction\n    common = gcd(a, b)\n    a //= common\n    b //= common\n    \n    # Integer part\n    integer_part = a // b\n    remainder = a % b\n    \n    result = \"\"\n    if negative and (integer_part > 0 or remainder > 0):\n        result = \"-\"\n    \n    result += str(integer_part)\n    \n    if remainder == 0:\n        return result\n    \n    result += \".\"\n    \n    # Decimal part\n    decimal_digits = []\n    remainders = {}\n    \n    while remainder != 0:\n        if remainder in remainders:\n            # Found repeating part\n            repeat_start = remainders[remainder]\n            non_repeating = decimal_digits[:repeat_start]\n            repeating = decimal_digits[repeat_start:]\n            result += \"\".join(map(str, non_repeating))\n            result += \"(\" + \"\".join(map(str, repeating)) + \")\"\n            return result\n        \n        remainders[remainder] = len(decimal_digits)\n        remainder *= 10\n        decimal_digits.append(remainder // b)\n        remainder = remainder % b\n    \n    result += \"\".join(map(str, decimal_digits))\n    return result\n\ndef main():\n    for line in sys.stdin:\n        line = line.strip()\n        if not line:\n            continue\n        \n        # Parse the fraction\n        if '/' in line:\n            parts = line.split('/')\n            a = int(parts[0].strip())\n            b = int(parts[1].strip())\n        else:\n            # Just an integer\n            a = int(line.strip())\n            b = 1\n        \n        print(decimal_expansion(a, b))\n\nif __name__ == \"__main__\":\n    main()",
+        "bytes": 1695,
+        "score": 0.0649,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "import sys\nfrom math import gcd\nfor l in sys.stdin:\n l=l.strip()\n if not l:continue\n a,b=int(l.split('/')[0]),int(l.split('/')[1]) if '/'in l else(int(l),1)\n n=(a<0)^(b<0);a,b=abs(a),abs(b);g=gcd(a,b);a//=g;b//=g;i=a//b;r=a%b\n s=('-'if n and(i or r)else'')+str(i)\n if r:\n  s+='.';d=[];m={}\n  while r:\n   if r in m:s+=''.join(map(str,d[:m[r]]))+'('+''.join(map(str,d[m[r]:]));s+=')';break\n   m[r]=len(d);r*=10;d.append(r//b);r%=b\n  else:s+=''.join(map(str,d))\n print(s)",
+        "bytes": 468,
+        "score": 0.235,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "prime-numbers",
+    "category": "Sequence",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 197,
+    "final_correct": true,
+    "final_bytes": 62,
+    "seed_score": 0.203,
+    "final_score": 0.6452,
+    "human_best": 40,
+    "seed_code": "for num in range(2, 101):\n    is_prime = True\n    for i in range(2, int(num ** 0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    if is_prime:\n        print(num)",
+    "final_code": "[print(n)for n in range(2,101)if all(n%i for i in range(2,n))]",
+    "delta_bytes": 135,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "for num in range(2, 101):\n    is_prime = True\n    for i in range(2, int(num ** 0.5) + 1):\n        if num % i == 0:\n            is_prime = False\n            break\n    if is_prime:\n        print(num)",
+        "bytes": 197,
+        "score": 0.203,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "print(*[n for n in range(2,101)if all(n%i for i in range(2,n))],sep='\\n')",
+        "bytes": 73,
+        "score": 0.5479,
+        "is_best": false
+      },
+      {
+        "idx": 2,
+        "code": "[print(n)for n in range(2,101)if all(n%i for i in range(2,n))]",
+        "bytes": 62,
+        "score": 0.6452,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "arabic-to-roman",
+    "category": "Transform",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 459,
+    "final_correct": true,
+    "final_bytes": 184,
+    "seed_score": 0.2702,
+    "final_score": 0.6739,
+    "human_best": 124,
+    "seed_code": "import sys\n\ndef to_roman(num):\n    val = [\n        1000, 900, 500, 400,\n        100, 90, 50, 40,\n        10, 9, 5, 4,\n        1\n    ]\n    syms = [\n        'M', 'CM', 'D', 'CD',\n        'C', 'XC', 'L', 'XL',\n        'X', 'IX', 'V', 'IV',\n        'I'\n    ]\n    result = ''\n    for i in range(len(val)):\n        while num >= val[i]:\n            result += syms[i]\n            num -= val[i]\n    return result\n\nfor arg in sys.argv[1:]:\n    print(to_roman(int(arg)))",
+    "final_code": "import sys\nfor a in sys.argv[1:]:\n n=int(a);r=''\n for v,s in zip([1000,900,500,400,100,90,50,40,10,9,5,4,1],'M CM D CD C XC L XL X IX V IV I'.split()):\n  while n>=v:r+=s;n-=v\n print(r)",
+    "delta_bytes": 275,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "import sys\n\ndef to_roman(num):\n    val = [\n        1000, 900, 500, 400,\n        100, 90, 50, 40,\n        10, 9, 5, 4,\n        1\n    ]\n    syms = [\n        'M', 'CM', 'D', 'CD',\n        'C', 'XC', 'L', 'XL',\n        'X', 'IX', 'V', 'IV',\n        'I'\n    ]\n    result = ''\n    for i in range(len(val)):\n        while num >= val[i]:\n            result += syms[i]\n            num -= val[i]\n    return result\n\nfor arg in sys.argv[1:]:\n    print(to_roman(int(arg)))",
+        "bytes": 459,
+        "score": 0.2702,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "import sys\nv=[(1000,'M'),(900,'CM'),(500,'D'),(400,'CD'),(100,'C'),(90,'XC'),(50,'L'),(40,'XL'),(10,'X'),(9,'IX'),(5,'V'),(4,'IV'),(1,'I')]\nfor a in sys.argv[1:]:\n n=int(a);r=''\n for q,s in v:\n  while n>=q:r+=s;n-=q\n print(r)",
+        "bytes": 225,
+        "score": 0.5511,
+        "is_best": false
+      },
+      {
+        "idx": 2,
+        "code": "import sys\nfor a in sys.argv[1:]:\n n=int(a);r=''\n for v,s in zip([1000,900,500,400,100,90,50,40,10,9,5,4,1],'M CM D CD C XC L XL X IX V IV I'.split()):\n  while n>=v:r+=s;n-=v\n print(r)",
+        "bytes": 184,
+        "score": 0.6739,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "binary-lambda-calculus",
+    "category": "Computing",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 3369,
+    "final_correct": true,
+    "final_bytes": 745,
+    "seed_score": 0.0819,
+    "final_score": 0.3705,
+    "human_best": 276,
+    "seed_code": "import sys\n\n# Lambda calculus terms:\n# Lam(body) - lambda abstraction\n# App(func, arg) - application  \n# Var(index) - de Bruijn index (1-based as per BLC)\n\nclass Lam:\n    def __init__(self, body):\n        self.body = body\n    def __repr__(self):\n        return f\"Lam({self.body})\"\n\nclass App:\n    def __init__(self, func, arg):\n        self.func = func\n        self.arg = arg\n    def __repr__(self):\n        return f\"App({self.func}, {self.arg})\"\n\nclass Var:\n    def __init__(self, index):\n        self.index = index  # 1-based de Bruijn\n    def __repr__(self):\n        return f\"Var({self.index})\"\n\ndef parse(s, pos):\n    if s[pos:pos+2] == '00':\n        body, pos = parse(s, pos+2)\n        return Lam(body), pos\n    elif s[pos:pos+2] == '01':\n        func, pos = parse(s, pos+2)\n        arg, pos = parse(s, pos)\n        return App(func, arg), pos\n    else:\n        # Count 1s until 0\n        count = 0\n        while pos < len(s) and s[pos] == '1':\n            count += 1\n            pos += 1\n        pos += 1  # skip the '0'\n        return Var(count), pos\n\ndef shift(term, d, cutoff=0):\n    \"\"\"Shift free variables by d, where free means index > cutoff\"\"\"\n    if isinstance(term, Var):\n        if term.index > cutoff:\n            return Var(term.index + d)\n        return term\n    elif isinstance(term, Lam):\n        return Lam(shift(term.body, d, cutoff + 1))\n    elif isinstance(term, App):\n        return App(shift(term.func, d, cutoff), shift(term.arg, d, cutoff))\n\ndef subst(term, index, value):\n    \"\"\"Substitute value for variable with given index\"\"\"\n    if isinstance(term, Var):\n        if term.index == index:\n            return value\n        elif term.index > index:\n            return Var(term.index - 1)\n        return term\n    elif isinstance(term, Lam):\n        return Lam(subst(term.body, index + 1, shift(value, 1)))\n    elif isinstance(term, App):\n        return App(subst(term.func, index, value), subst(term.arg, index, value))\n\ndef beta_reduce(term):\n    \"\"\"Perform one step of beta reduction, return (new_term, reduced)\"\"\"\n    if isinstance(term, App):\n        if isinstance(term.func, Lam):\n            # Beta reduction\n            result = subst(term.func.body, 1, term.arg)\n            return result, True\n        else:\n            new_func, reduced = beta_reduce(term.func)\n            if reduced:\n                return App(new_func, term.arg), True\n            new_arg, reduced = beta_reduce(term.arg)\n            if reduced:\n                return App(term.func, new_arg), True\n    elif isinstance(term, Lam):\n        new_body, reduced = beta_reduce(term.body)\n        if reduced:\n            return Lam(new_body), True\n    return term, False\n\ndef normalize(term):\n    \"\"\"Normalize term by repeated beta reduction\"\"\"\n    while True:\n        term, reduced = beta_reduce(term)\n        if not reduced:\n            return term\n\ndef encode(term):\n    \"\"\"Encode term back to binary lambda calculus\"\"\"\n    if isinstance(term, Lam):\n        return '00' + encode(term.body)\n    elif isinstance(term, App):\n        return '01' + encode(term.func) + encode(term.arg)\n    elif isinstance(term, Var):\n        return '1' * term.index + '0'\n\ndef main():\n    for line in sys.stdin:\n        line = line.strip()\n        if not line:\n            continue\n        term, _ = parse(line, 0)\n        normal = normalize(term)\n        print(encode(normal))\n\nmain()",
+    "final_code": "import sys\ndef P(s,i):\n if s[i:i+2]<'01':b,i=P(s,i+2);return(0,b),i\n if s[i]<'1':f,i=P(s,i+2);a,i=P(s,i);return(1,f,a),i\n c=0\n while s[i]>'0':c+=1;i+=1\n return(2,c),i+1\ndef S(t,d,c=0):\n if t[0]==2:return(2,t[1]+d)if t[1]>c else t\n if t[0]==0:return(0,S(t[1],d,c+1))\n return(1,S(t[1],d,c),S(t[2],d,c))\ndef U(t,i,v):\n if t[0]==2:return v if t[1]==i else(2,t[1]-1)if t[1]>i else t\n if t[0]==0:return(0,U(t[1],i+1,S(v,1)))\n return(1,U(t[1],i,v),U(t[2],i,v))\ndef N(t):\n while t[0]==1:\n  f=N(t[1])\n  if f[0]!=0:return(1,f,N(t[2]))\n  t=U(f[1],1,t[2])\n if t[0]==0:return(0,N(t[1]))\n return t\ndef E(t):\n if t[0]==0:return'00'+E(t[1])\n if t[0]==1:return'01'+E(t[1])+E(t[2])\n return'1'*t[1]+'0'\nfor l in sys.stdin:\n l=l.strip()\n if l:print(E(N(P(l,0)[0])))",
+    "delta_bytes": 2624,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "import sys\n\n# Lambda calculus terms:\n# Lam(body) - lambda abstraction\n# App(func, arg) - application  \n# Var(index) - de Bruijn index (1-based as per BLC)\n\nclass Lam:\n    def __init__(self, body):\n        self.body = body\n    def __repr__(self):\n        return f\"Lam({self.body})\"\n\nclass App:\n    def __init__(self, func, arg):\n        self.func = func\n        self.arg = arg\n    def __repr__(self):\n        return f\"App({self.func}, {self.arg})\"\n\nclass Var:\n    def __init__(self, index):\n        self.index = index  # 1-based de Bruijn\n    def __repr__(self):\n        return f\"Var({self.index})\"\n\ndef parse(s, pos):\n    if s[pos:pos+2] == '00':\n        body, pos = parse(s, pos+2)\n        return Lam(body), pos\n    elif s[pos:pos+2] == '01':\n        func, pos = parse(s, pos+2)\n        arg, pos = parse(s, pos)\n        return App(func, arg), pos\n    else:\n        # Count 1s until 0\n        count = 0\n        while pos < len(s) and s[pos] == '1':\n            count += 1\n            pos += 1\n        pos += 1  # skip the '0'\n        return Var(count), pos\n\ndef shift(term, d, cutoff=0):\n    \"\"\"Shift free variables by d, where free means index > cutoff\"\"\"\n    if isinstance(term, Var):\n        if term.index > cutoff:\n            return Var(term.index + d)\n        return term\n    elif isinstance(term, Lam):\n        return Lam(shift(term.body, d, cutoff + 1))\n    elif isinstance(term, App):\n        return App(shift(term.func, d, cutoff), shift(term.arg, d, cutoff))\n\ndef subst(term, index, value):\n    \"\"\"Substitute value for variable with given index\"\"\"\n    if isinstance(term, Var):\n        if term.index == index:\n            return value\n        elif term.index > index:\n            return Var(term.index - 1)\n        return term\n    elif isinstance(term, Lam):\n        return Lam(subst(term.body, index + 1, shift(value, 1)))\n    elif isinstance(term, App):\n        return App(subst(term.func, index, value), subst(term.arg, index, value))\n\ndef beta_reduce(term):\n    \"\"\"Perform one step of beta reduction, return (new_term, reduced)\"\"\"\n    if isinstance(term, App):\n        if isinstance(term.func, Lam):\n            # Beta reduction\n            result = subst(term.func.body, 1, term.arg)\n            return result, True\n        else:\n            new_func, reduced = beta_reduce(term.func)\n            if reduced:\n                return App(new_func, term.arg), True\n            new_arg, reduced = beta_reduce(term.arg)\n            if reduced:\n                return App(term.func, new_arg), True\n    elif isinstance(term, Lam):\n        new_body, reduced = beta_reduce(term.body)\n        if reduced:\n            return Lam(new_body), True\n    return term, False\n\ndef normalize(term):\n    \"\"\"Normalize term by repeated beta reduction\"\"\"\n    while True:\n        term, reduced = beta_reduce(term)\n        if not reduced:\n            return term\n\ndef encode(term):\n    \"\"\"Encode term back to binary lambda calculus\"\"\"\n    if isinstance(term, Lam):\n        return '00' + encode(term.body)\n    elif isinstance(term, App):\n        return '01' + encode(term.func) + encode(term.arg)\n    elif isinstance(term, Var):\n        return '1' * term.index + '0'\n\ndef main():\n    for line in sys.stdin:\n        line = line.strip()\n        if not line:\n            continue\n        term, _ = parse(line, 0)\n        normal = normalize(term)\n        print(encode(normal))\n\nmain()",
+        "bytes": 3369,
+        "score": 0.0819,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "import sys\ndef P(s,i):\n if s[i:i+2]=='00':\n  b,i=P(s,i+2);return(0,b),i\n if s[i:i+2]=='01':\n  f,i=P(s,i+2);a,i=P(s,i);return(1,f,a),i\n c=0\n while s[i]=='1':c+=1;i+=1\n return(2,c),i+1\ndef S(t,d,c=0):\n if t[0]==2:return(2,t[1]+d)if t[1]>c else t\n if t[0]==0:return(0,S(t[1],d,c+1))\n return(1,S(t[1],d,c),S(t[2],d,c))\ndef U(t,i,v):\n if t[0]==2:return v if t[1]==i else(2,t[1]-1)if t[1]>i else t\n if t[0]==0:return(0,U(t[1],i+1,S(v,1)))\n return(1,U(t[1],i,v),U(t[2],i,v))\ndef N(t):\n while True:\n  t,r=R(t)\n  if not r:return t\ndef R(t):\n if t[0]==1:\n  if t[1][0]==0:return U(t[1][1],1,t[2]),True\n  f,r=R(t[1])\n  if r:return(1,f,t[2]),True\n  a,r=R(t[2])\n  if r:return(1,t[1],a),True\n if t[0]==0:\n  b,r=R(t[1])\n  if r:return(0,b),True\n return t,False\ndef E(t):\n if t[0]==0:return'00'+E(t[1])\n if t[0]==1:return'01'+E(t[1])+E(t[2])\n return'1'*t[1]+'0'\nfor l in sys.stdin:\n l=l.strip()\n if l:print(E(N(P(l,0)[0])))",
+        "bytes": 905,
+        "score": 0.305,
+        "is_best": false
+      },
+      {
+        "idx": 2,
+        "code": "import sys\ndef P(s,i):\n if s[i:i+2]=='00':b,i=P(s,i+2);return(0,b),i\n if s[i:i+2]=='01':f,i=P(s,i+2);a,i=P(s,i);return(1,f,a),i\n c=0\n while s[i]=='1':c+=1;i+=1\n return(2,c),i+1\ndef S(t,d,c=0):\n if t[0]==2:return(2,t[1]+d)if t[1]>c else t\n if t[0]==0:return(0,S(t[1],d,c+1))\n return(1,S(t[1],d,c),S(t[2],d,c))\ndef U(t,i,v):\n if t[0]==2:return v if t[1]==i else(2,t[1]-1)if t[1]>i else t\n if t[0]==0:return(0,U(t[1],i+1,S(v,1)))\n return(1,U(t[1],i,v),U(t[2],i,v))\ndef R(t):\n if t[0]==1:\n  if t[1][0]==0:return U(t[1][1],1,t[2]),1\n  f,r=R(t[1])\n  if r:return(1,f,t[2]),1\n  a,r=R(t[2])\n  if r:return(1,t[1],a),1\n if t[0]==0:\n  b,r=R(t[1])\n  if r:return(0,b),1\n return t,0\ndef N(t):\n r=1\n while r:t,r=R(t)\n return t\ndef E(t):\n if t[0]==0:return'00'+E(t[1])\n if t[0]==1:return'01'+E(t[1])+E(t[2])\n return'1'*t[1]+'0'\nfor l in sys.stdin:\n l=l.strip()\n if l:print(E(N(P(l,0)[0])))",
+        "bytes": 872,
+        "score": 0.3165,
+        "is_best": false
+      },
+      {
+        "idx": 3,
+        "code": "import sys\ndef P(s,i):\n if s[i:i+2]=='00':b,i=P(s,i+2);return(0,b),i\n if s[i:i+2]=='01':f,i=P(s,i+2);a,i=P(s,i);return(1,f,a),i\n c=0\n while s[i]=='1':c+=1;i+=1\n return(2,c),i+1\ndef S(t,d,c=0):\n if t[0]==2:return(2,t[1]+d)if t[1]>c else t\n if t[0]==0:return(0,S(t[1],d,c+1))\n return(1,S(t[1],d,c),S(t[2],d,c))\ndef U(t,i,v):\n if t[0]==2:return v if t[1]==i else(2,t[1]-1)if t[1]>i else t\n if t[0]==0:return(0,U(t[1],i+1,S(v,1)))\n return(1,U(t[1],i,v),U(t[2],i,v))\ndef N(t):\n while 1:\n  if t[0]==1:\n   if t[1][0]==0:t=U(t[1][1],1,t[2]);continue\n   t=(1,N(t[1]),t[2])\n   if t[1][0]==0:t=U(t[1][1],1,t[2]);continue\n   t=(1,t[1],N(t[2]))\n  elif t[0]==0:t=(0,N(t[1]))\n  return t\ndef E(t):\n if t[0]==0:return'00'+E(t[1])\n if t[0]==1:return'01'+E(t[1])+E(t[2])\n return'1'*t[1]+'0'\nfor l in sys.stdin:\n l=l.strip()\n if l:print(E(N(P(l,0)[0])))",
+        "bytes": 833,
+        "score": 0.3313,
+        "is_best": false
+      },
+      {
+        "idx": 4,
+        "code": "import sys\ndef P(s,i):\n if s[i:i+2]=='00':b,i=P(s,i+2);return(0,b),i\n if s[i:i+2]=='01':f,i=P(s,i+2);a,i=P(s,i);return(1,f,a),i\n c=0\n while s[i]=='1':c+=1;i+=1\n return(2,c),i+1\ndef S(t,d,c=0):\n if t[0]==2:return(2,t[1]+d)if t[1]>c else t\n if t[0]==0:return(0,S(t[1],d,c+1))\n return(1,S(t[1],d,c),S(t[2],d,c))\ndef U(t,i,v):\n if t[0]==2:return v if t[1]==i else(2,t[1]-1)if t[1]>i else t\n if t[0]==0:return(0,U(t[1],i+1,S(v,1)))\n return(1,U(t[1],i,v),U(t[2],i,v))\ndef N(t):\n if t[0]==0:return(0,N(t[1]))\n if t[0]==1:\n  f=N(t[1])\n  if f[0]==0:return N(U(f[1],1,t[2]))\n  return(1,f,N(t[2]))\n return t\ndef E(t):\n if t[0]==0:return'00'+E(t[1])\n if t[0]==1:return'01'+E(t[1])+E(t[2])\n return'1'*t[1]+'0'\nfor l in sys.stdin:\n l=l.strip()\n if l:print(E(N(P(l,0)[0])))",
+        "bytes": 758,
+        "score": 0.3641,
+        "is_best": false
+      },
+      {
+        "idx": 5,
+        "code": "import sys\ndef P(s,i):\n if s[i:i+2]=='00':b,i=P(s,i+2);return(0,b),i\n if s[i:i+2]=='01':f,i=P(s,i+2);a,i=P(s,i);return(1,f,a),i\n c=0\n while s[i]=='1':c+=1;i+=1\n return(2,c),i+1\ndef S(t,d,c=0):\n if t[0]==2:return(2,t[1]+d)if t[1]>c else t\n if t[0]==0:return(0,S(t[1],d,c+1))\n return(1,S(t[1],d,c),S(t[2],d,c))\ndef U(t,i,v):\n if t[0]==2:return v if t[1]==i else(2,t[1]-1)if t[1]>i else t\n if t[0]==0:return(0,U(t[1],i+1,S(v,1)))\n return(1,U(t[1],i,v),U(t[2],i,v))\ndef N(t):\n while t[0]==1:\n  f=N(t[1])\n  if f[0]!=0:return(1,f,N(t[2]))\n  t=U(f[1],1,t[2])\n if t[0]==0:return(0,N(t[1]))\n return t\ndef E(t):\n if t[0]==0:return'00'+E(t[1])\n if t[0]==1:return'01'+E(t[1])+E(t[2])\n return'1'*t[1]+'0'\nfor l in sys.stdin:\n l=l.strip()\n if l:print(E(N(P(l,0)[0])))",
+        "bytes": 753,
+        "score": 0.3665,
+        "is_best": false
+      },
+      {
+        "idx": 6,
+        "code": "import sys\ndef P(s,i):\n if s[i:i+2]<'01':b,i=P(s,i+2);return(0,b),i\n if s[i]<'1':f,i=P(s,i+2);a,i=P(s,i);return(1,f,a),i\n c=0\n while s[i]>'0':c+=1;i+=1\n return(2,c),i+1\ndef S(t,d,c=0):\n if t[0]==2:return(2,t[1]+d)if t[1]>c else t\n if t[0]==0:return(0,S(t[1],d,c+1))\n return(1,S(t[1],d,c),S(t[2],d,c))\ndef U(t,i,v):\n if t[0]==2:return v if t[1]==i else(2,t[1]-1)if t[1]>i else t\n if t[0]==0:return(0,U(t[1],i+1,S(v,1)))\n return(1,U(t[1],i,v),U(t[2],i,v))\ndef N(t):\n while t[0]==1:\n  f=N(t[1])\n  if f[0]!=0:return(1,f,N(t[2]))\n  t=U(f[1],1,t[2])\n if t[0]==0:return(0,N(t[1]))\n return t\ndef E(t):\n if t[0]==0:return'00'+E(t[1])\n if t[0]==1:return'01'+E(t[1])+E(t[2])\n return'1'*t[1]+'0'\nfor l in sys.stdin:\n l=l.strip()\n if l:print(E(N(P(l,0)[0])))",
+        "bytes": 745,
+        "score": 0.3705,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "fractions",
+    "category": "Mathematics",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 486,
+    "final_correct": true,
+    "final_bytes": 165,
+    "seed_score": 0.1502,
+    "final_score": 0.4424,
+    "human_best": 73,
+    "seed_code": "from math import gcd\n\ndef reduce_fraction(fraction):\n    # Parse the fraction\n    parts = fraction.split('/')\n    a = int(parts[0])\n    b = int(parts[1])\n    \n    # Handle sign\n    if b < 0:\n        a = -a\n        b = -b\n    \n    # Find GCD and reduce\n    common = gcd(abs(a), abs(b))\n    a = a // common\n    b = b // common\n    \n    return f\"{a}/{b}\"\n\n# Read input and process\nimport sys\n\nfor line in sys.stdin:\n    line = line.strip()\n    if line:\n        print(reduce_fraction(line))",
+    "final_code": "from math import gcd\nimport sys\nfor l in sys.stdin:\n l=l.strip()\n if'/'in l:\n  a,b=map(int,l.split('/'))\n  if b<0:a,b=-a,-b\n  d=gcd(abs(a),b);print(f\"{a//d}/{b//d}\")",
+    "delta_bytes": 321,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "from math import gcd\n\ndef reduce_fraction(fraction):\n    # Parse the fraction\n    parts = fraction.split('/')\n    a = int(parts[0])\n    b = int(parts[1])\n    \n    # Handle sign\n    if b < 0:\n        a = -a\n        b = -b\n    \n    # Find GCD and reduce\n    common = gcd(abs(a), abs(b))\n    a = a // common\n    b = b // common\n    \n    return f\"{a}/{b}\"\n\n# Read input and process\nimport sys\n\nfor line in sys.stdin:\n    line = line.strip()\n    if line:\n        print(reduce_fraction(line))",
+        "bytes": 486,
+        "score": 0.1502,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "from math import gcd\nimport sys\nfor l in sys.stdin:\n l=l.strip()\n if l:\n  if'/'in l:\n   a,b=map(int,l.split('/'));s=(-1if(a<0)^(b<0)else 1)if a and b else 1;g=gcd(abs(a),abs(b));print(f\"{s*abs(a)//g}/{abs(b)//g}\")\n  else:print(l)",
+        "bytes": 229,
+        "score": 0.3188,
+        "is_best": false
+      },
+      {
+        "idx": 2,
+        "code": "from math import gcd as g\nimport sys\nfor l in sys.stdin:\n l=l.strip()\n if l:\n  if'/'in l:\n   a,b=map(int,l.split('/'))\n   if b<0:a,b=-a,-b\n   d=g(abs(a),b)\n   print(f\"{a//d}/{b//d}\")\n  else:print(l)",
+        "bytes": 198,
+        "score": 0.3687,
+        "is_best": false
+      },
+      {
+        "idx": 3,
+        "code": "from math import gcd\nimport sys\nfor l in sys.stdin:\n l=l.strip()\n if'/'in l:\n  a,b=map(int,l.split('/'))\n  if b<0:a,b=-a,-b\n  d=gcd(abs(a),b);print(f\"{a//d}/{b//d}\")\n elif l:print(l)",
+        "bytes": 182,
+        "score": 0.4011,
+        "is_best": false
+      },
+      {
+        "idx": 4,
+        "code": "from math import gcd\nimport sys\nfor l in sys.stdin:\n l=l.strip()\n if'/'in l:\n  a,b=map(int,l.split('/'))\n  if b<0:a,b=-a,-b\n  d=gcd(abs(a),b);print(f\"{a//d}/{b//d}\")",
+        "bytes": 165,
+        "score": 0.4424,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "fibonacci",
+    "category": "Sequence",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 64,
+    "final_correct": true,
+    "final_bytes": 38,
+    "seed_score": 0.5625,
+    "final_score": 0.9474,
+    "human_best": 36,
+    "seed_code": "a, b = 0, 1\nfor _ in range(31):\n    print(a)\n    a, b = b, a + b",
+    "final_code": "a=0;b=1;exec(\"print(a);a,b=b,a+b;\"*31)",
+    "delta_bytes": 26,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "a, b = 0, 1\nfor _ in range(31):\n    print(a)\n    a, b = b, a + b",
+        "bytes": 64,
+        "score": 0.5625,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "a=0;b=1;exec(\"print(a);a,b=b,a+b;\"*31)",
+        "bytes": 38,
+        "score": 0.9474,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "pernicious-numbers",
+    "category": "Sequence",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 257,
+    "final_correct": true,
+    "final_bytes": 50,
+    "seed_score": 0.1556,
+    "final_score": 0.8,
+    "human_best": 40,
+    "seed_code": "def is_prime(n):\n    if n < 2:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nfor num in range(51):\n    bit_sum = bin(num).count('1')\n    if is_prime(bit_sum):\n        print(num)",
+    "final_code": "[print(n)for n in range(51)if 44>>n.bit_count()&1]",
+    "delta_bytes": 207,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "def is_prime(n):\n    if n < 2:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nfor num in range(51):\n    bit_sum = bin(num).count('1')\n    if is_prime(bit_sum):\n        print(num)",
+        "bytes": 257,
+        "score": 0.1556,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "[print(n)for n in range(51)if bin(n).count('1')in(2,3,5,7)]",
+        "bytes": 59,
+        "score": 0.678,
+        "is_best": false
+      },
+      {
+        "idx": 2,
+        "code": "[print(n)for n in range(51)if bin(n).count('1')in{2,3,5}]",
+        "bytes": 57,
+        "score": 0.7018,
+        "is_best": false
+      },
+      {
+        "idx": 3,
+        "code": "[print(n)for n in range(51)if 44>>n.bit_count()&1]",
+        "bytes": 50,
+        "score": 0.8,
+        "is_best": true
+      }
+    ]
+  },
+  {
+    "hole": "evil-numbers",
+    "category": "Sequence",
+    "gen_model": "claude-sonnet-4-6",
+    "reflection_lm": "anthropic/claude-sonnet-4-6",
+    "budget": 100,
+    "seed_correct": true,
+    "seed_bytes": 71,
+    "final_correct": true,
+    "final_bytes": 45,
+    "seed_score": 0.5634,
+    "final_score": 0.8889,
+    "human_best": 40,
+    "seed_code": "for n in range(51):\n    if bin(n).count('1') % 2 == 0:\n        print(n)",
+    "final_code": "for n in range(51):n.bit_count()%2or print(n)",
+    "delta_bytes": 26,
+    "all_candidates": [
+      {
+        "idx": 0,
+        "code": "for n in range(51):\n    if bin(n).count('1') % 2 == 0:\n        print(n)",
+        "bytes": 71,
+        "score": 0.5634,
+        "is_best": false
+      },
+      {
+        "idx": 1,
+        "code": "[print(n)for n in range(51)if~n.bit_count()%2]",
+        "bytes": 46,
+        "score": 0.8696,
+        "is_best": false
+      },
+      {
+        "idx": 2,
+        "code": "for n in range(51):n.bit_count()%2or print(n)",
+        "bytes": 45,
+        "score": 0.8889,
+        "is_best": true
+      }
+    ]
+  }
+]

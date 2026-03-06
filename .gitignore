@@ -1,0 +1,35 @@
+# Environment / secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Project-specific cache
+problems_cache/
+
+# Logs (raw txt from runs)
+logs/*.txt
+
+# Large intermediate logs not needed for publishing
+logs/single_run_*.json
+logs/budget_*.json
+logs/baseline_correct_*.json
+logs/baseline_sonnet*.txt
+logs/run_stratified*.txt
+logs/sample_correctness.txt
+logs/gepa_*.txt
+logs/compress_direct_opus.txt
+logs/dataset_*.jsonl
+logs/final_generations.jsonl
+logs/generations.jsonl
+
+# IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp

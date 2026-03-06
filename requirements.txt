@@ -1,0 +1,5 @@
+gepa
+anthropic
+python-dotenv
+requests
+beautifulsoup4
